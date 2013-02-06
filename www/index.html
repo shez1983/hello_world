@@ -12,11 +12,11 @@
 	});
 	
 	$(document).ready(function() {
-		$.("#aboutme").click(function(e){
+		$("#aboutme").click(function(e){
 			e.preventDefault();
 			var url = "getInfo.html";
 			var data = "";
-			$.get(url,data,
+			$.post(url,"",
 				function(data){
 					$("#aboutme_info").text(data);
 				}
