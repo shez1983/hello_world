@@ -16,16 +16,14 @@
 			var p = $('input[name=password]').val();
 			
 			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php";
+			 $("#error").html('loading');
 			$.post(url,{username:u, password:p, method:'login'},
 				function(data){
-					alert(data);
 					$("#error").html(data);
-					$('input[type=submit]').removeAttr("disabled");
 				}
 			);
 			
 			$('input[type=submit]').removeAttr("disabled");
-			alert(data);
 			return false;
 		});
 	});  
