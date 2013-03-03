@@ -19,9 +19,17 @@
 			 $("#error").html('loading');
 			$.post(url,{username:u, password:p, method:'login'},
 				function(data){
-					$("#error").html(data);
-				}
-			);
+					if (data.logged_in) {
+						$("#error").html(data.logged_in);
+					} else {
+					
+						if ( data.error) {
+					 		$("#error").html(data.error);
+						} else {
+							window.location = "menu.html";
+						}
+					};
+				},"json");
 			
 			$('input[type=submit]').removeAttr("disabled");
 			return false;
@@ -33,16 +41,13 @@
 
 <body>
 
-<div data-role="page" id="mtwhitney_info" data-theme="d">
+<div data-role="page" id="app_login" data-theme="e">
 	
-    <div data-role="header">
-    	<h1>App Name</h1>
+    <div data-role="header"  data-theme="e">
+    	<h1>Login</h1>
   	</div>
   	
-    <div data-role="content">
-  	
-    	<h2>Login</h2>
-        
+    <div data-role="content" data-theme="e">      
         <div id="error"></div>
         
         <form action="" method="post">
@@ -58,8 +63,8 @@
     
    	</div>
     
-  	<div data-role="footer">
-    	<h4>Explore California &copy; 2013</h4>
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
   	</div>
     
 </div>
