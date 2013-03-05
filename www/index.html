@@ -10,7 +10,7 @@
 	$(document).ready(function() {
 		var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 		$.post(url,{method:'logged_in'},function(data){
-			if (data) {
+			if (data == "TRUE") {
 				alert(data);
 				window.location = "menu.html";
 			}
