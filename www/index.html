@@ -18,6 +18,8 @@
 		
 		//TODO check if user is properly being logged in as i still was logged in after a day!
 		$("form").submit(function(e){
+			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
+			alert(1);
 			e.preventDefault();
 			$('input[type=submit]').attr("disabled","disabled");
 			
@@ -25,16 +27,20 @@
 			var p = $('input[name=password]').val();
 			
 			
-			 $("#error").html('loading');
+			$("#error").html('loading');
 			$.post(url,{username:u, password:p, method:'login'},
 				function(data){
 					if ( data.error) {
+						alert(2);
+						alert(data);
 						$("#error").html(data.error);
 					} else {
+						alert(3);
+						alert(data);
 						window.location = "menu.html";
 					}
-				},"json");
-			
+			},"json");
+			alert(4);
 			$('input[type=submit]').removeAttr("disabled");
 			return false;
 		});
