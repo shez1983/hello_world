@@ -27,6 +27,7 @@ $(document).ready(function() {
   	
     <div data-role="content" data-theme="e">    
        <?= print_r($_GET); ?>
+       <?= "testing" ;?>
     
    	</div>
     
