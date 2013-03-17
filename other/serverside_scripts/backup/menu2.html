@@ -12,17 +12,10 @@
 $(document).ready(function() {
 	 var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 	 
-	 //when user clicks on the activities for a class
-	 //get that <a id
-	 //store it 
-	 //take the user to another page with all the questions and multiple choice (this can be other type!!) 
-	 //with back button functionality
-	 
-	 
 	 //1. get today's lesson
 	 $.post(url,{method:'get_lesson', date:''},function(data){
 		  if (data) {
-				//alert(data);
+				alert(data);
 				$("#activies").html(data); //data will have a ul, li list
 		  } else {
 				$("#activies").html("No Activities for this date");
@@ -68,7 +61,26 @@ $(document).ready(function() {
 
 <body>
 
-
+<div data-role="page" id="app_login" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1>Menu</h1>
+  	</div>
+  	
+    <div data-role="content" data-theme="e">    
+        <ul data-role="listview" data-theme="e">
+            <li><a href="#todays_lesson">Today's Lesson</a></li>
+            <li><a href="view_schedule.html">View Schedule</a></li>
+            <li><a href="view_report.html">View Reports</a></li>
+        </ul>
+    
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+    
+</div>
 
 <div data-role="page" id="todays_lesson" data-theme="e">
 	
@@ -78,7 +90,6 @@ $(document).ready(function() {
   	
     <div id="activies" data-role="content" data-theme="e">    
         <ul data-role="listview" data-count-theme="e" data-inset="true">
-				
 		  </ul>
     </div>
     

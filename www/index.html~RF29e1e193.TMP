@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<link href="jquery-mobile/jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css">
+<link href="jquery-mobile/jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css">
+<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
+		
+		$.post(url,{method:'check_logged_in'},function(data){
+			if (data.message == "TRUE") {
+				window.location = "#menu";
+			}
+		},"json");
+		
+		//TODO check if user is properly being logged in as i still was logged in after a day!
+		$("form").submit(function(e){
+			e.preventDefault();
+			$('input[type=submit]').attr("disabled","disabled");
+			
+			var u = $('input[name=username]').val();
+			var p = $('input[name=password]').val();
+			
+			
+			$("#error").html('<img src="images/loading.gif"/>');
+			$.post(url,{username:u, password:p, method:'login'},
+				function(data){
+					if ( data.error) {
+						$("#error").html(data.error);
+					} else {
+						window.location = "#menu";
+					}
+			},"json");
+			$('input[type=submit]').removeAttr("disabled");
+			return false;
+		});
+		
+		$("#a_todays_lesson").click(function(e){
+			e.preventDefault();
+			alert("1");
+			var d = new Date(); 
+			
+			//for testing
+			var todays_date = "2013-02-04";
+			//var todays_date =  d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
+			
+			$.post(url, {
+				method: 'get_lesson_activities',
+				date:  todays_date
+				},
+				function(data){
+					$("#activities").append(data);
+					
+					if (data.error) {
+						$("#activities").html(data.error);
+					} else {
+						var content = '<ul id="activities" data-role="listview" data-theme="e">';
+						
+						//loop through the data
+						$.each(data, function(id, object) {
+                            $.each(object, function(name, value) {
+								var activity_id 		= "";
+								var activity_status 	= "";
+								var activity_type 		= "";
+								
+                            	
+							});
+							var status = "";
+							
+							if ( activity_status == "closed" ) {
+								
+							} else if ( activity_status == "open" ) { 
+								status = '<a href="">';
+								
+								status += '</a>';
+							} else { 
+							
+							}
+							
+							content += '<li>';
+							
+							
+							content += '<span class="ui-li-count">'+ +'</span>';
+							
+							content += '</li>';
+							exit;
+                        });
+						
+						content += '</ul>';
+					}
+					window.location = "#todays_lesson";
+				},
+			    "json"
+			);
+		});
+	});  
+</script>
+<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div data-role="page" id="app_login" data-theme="e">
+	<div data-role="header"  data-theme="e">
+    	<h1>Login</h1>
+  	</div>
+  	
+    <div data-role="content" data-theme="e">      
+        <div id="error"></div>
+        
+        <form action="" method="post">
+        	<label>username</label>
+            <input type="text" name="username" required/>
+            
+            <label>password</label>
+            <input type="password" name="password" required/>
+            
+            <input type="submit" name="login" value="Log in" />
+            
+        </form>
+    
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+</div>
+
+
+<div data-role="page" id="menu" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1>Menu</h1>
+  	</div>
+  	
+    <div data-role="content" data-theme="e">    
+        <ul data-role="listview" data-theme="e">
+            <li><a id="a_todays_lesson" href="">Today's Lesson</a></li>
+            <li><a href="view_schedule.html">View Schedule</a></li>
+            <li><a href="view_report.html">View Reports</a></li>
+        </ul>
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+    
+</div>
+
+<div data-role="page" id="todays_lesson" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1>Today's lesson</h1>
+  	</div>
+  	
+    <div data-role="content" data-theme="e">    
+        <ul id="activities" data-role="listview" data-theme="e">
+            
+        </ul>
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+    
+</div>
+
+
+
+</body>
+</html>
