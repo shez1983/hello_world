@@ -75,15 +75,16 @@
 				date:  todays_date
 				},
 				function(data){
-					$("#activities").append(data);
-					
 					if (data.error) {
+						alert("2");
 						$("#activities").html(data.error);
 					} else {
-						var content = '<ul id="activities" data-role="listview" data-theme="e">';
+						alert("3");
+						var content = '<ul data-role="listview" data-theme="e">';
 						
 						//loop through the data
 						$.each(data, function(id, object) {
+							alert("4");
                            // $.each(object, function(name, value) {
 								var activity_id 			= object.activity_id;
 								var activity_status 		= object.status;
@@ -102,7 +103,7 @@
 							} else { 
 								status = "Score";
 							}
-							S
+							
 							content += '<li>'+activity_type;
 							content += '<span class="ui-li-count">'+ status +'</span>';
 							content += '</li>';
