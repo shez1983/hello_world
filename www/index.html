@@ -9,16 +9,15 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
-		$.post(url,{method:'logged_in'},function(data){
-			if (data == "TRUE") {
-				alert(data);
-				window.location = "menu.html";
+		
+		$.post(url,{method:'check_logged_in'},function(data){
+			if (data.message == "TRUE") {
+				window.location = "#menu";
 			}
-		});
+		},"json");
 		
 		//TODO check if user is properly being logged in as i still was logged in after a day!
 		$("form").submit(function(e){
-			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 			e.preventDefault();
 			$('input[type=submit]').attr("disabled","disabled");
 			
@@ -26,17 +25,98 @@
 			var p = $('input[name=password]').val();
 			
 			
-			$("#error").html('loading.gif');
+			$("#error").html('<img src="images/loading.gif"/>');
 			$.post(url,{username:u, password:p, method:'login'},
 				function(data){
 					if ( data.error) {
 						$("#error").html(data.error);
 					} else {
-						window.location = "menu.html";
+						window.location = "#menu";
 					}
 			},"json");
 			$('input[type=submit]').removeAttr("disabled");
 			return false;
+		});
+		
+		$("#a_activity_review").click(function(e){
+			e.preventDefault();
+			alert(1);
+			var schedule_activity = $(this).attr("schedule_activities_id");
+			
+			$.post(url, {method: "get_lesson_activities", schedule_activity_id: schedule_activity},
+			function(object){
+				var activity_review_list = '<table data-role="table" data-theme="e"><tbody>';
+				activity_review_list += '<tr><th>Category:</th><td>'+object.category+'</td></tr>';
+				activity_review_list += '<tr><th>Subject:</th><td>'+object.subject+'</td></tr>';
+				activity_review_list += '<tr><th>Type:</th><td>'+object.type+'</td></tr>';
+				activity_review_list += '<tr><th>Time Limit:</th><td>'+object.time_limit+'</td></tr>';
+				activity_review_list += '<tr><th>Level:</th><td>'+object.level+'</td></tr>';
+				activity_review_list += '<tr><th>Questions:</th><td>'+object.type+'</td></tr>';
+				activity_review_list += '</table>'; 
+				
+				activity_review_list += '<a total_questions="" assessment_id=""  question_no="" activity_id="" id="a_activity_questions" href="#activity_questions" data-role="button" data-inline="true" data-theme="e" data-mini="true">Start</a>';
+							
+				$("#activity_review_list").html(activity_review_list);
+			},
+			"json"
+			);
+		});
+		
+		$("#a_todays_lesson").click(function(e){
+			e.preventDefault();
+			var d = new Date(); 
+			
+			//for testing
+			var todays_date = "2013-02-04";
+			//var todays_date =  d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
+			
+			$.post(url, {
+				method: 'get_lesson_activities',
+				date:  todays_date
+				},
+				function(data){
+					$("#activities").append(data);
+					
+					if (data.error) {
+						$("#activities").html(data.error);
+					} else {
+						var content = '<ul id="activities" data-role="listview" data-theme="e">';
+						
+						//loop through the data
+						$.each(data, function(id, object) {
+                           // $.each(object, function(name, value) {
+								var activity_id 			= object.activity_id;
+								var activity_status 		= object.status;
+								var activity_type 			= object.type;
+								var schedule_activities_id 	= object.schedule_activities_id;
+                            	
+							//});
+							var status = "";
+							
+							if ( activity_status == "closed" ) {
+								status += "Can't view";
+							} else if ( activity_status == "open" ) { 
+								status = '<a id="a_activity_review" schedule_activities_id="'+schedule_activities_id+'" href="#activity_review">';
+								status += "start";
+								status += '</a>';
+							} else { 
+								status = "Score";
+							}
+							S
+							content += '<li>'+activity_type;
+							content += '<span class="ui-li-count">'+ status +'</span>';
+							content += '</li>';
+							
+							
+                        });
+						
+						content += '</ul>';
+						$("#activities").html(content);
+					}
+					window.location = "#todays_lesson";
+				},
+			    "json"
+			);
 		});
 	});  
 </script>
@@ -46,8 +126,7 @@
 <body>
 
 <div data-role="page" id="app_login" data-theme="e">
-	
-    <div data-role="header"  data-theme="e">
+	<div data-role="header"  data-theme="e">
     	<h1>Login</h1>
   	</div>
   	
@@ -70,8 +149,78 @@
   	<div data-role="footer" data-theme="e">
     	<h4>App Name &copy; 2013</h4>
   	</div>
+</div>
+
+
+<div data-role="page" id="menu" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1>Menu</h1>
+  	</div>
+  	
+    <div data-role="content" data-theme="e">    
+        <ul data-role="listview" data-theme="e">
+            <li><a id="a_todays_lesson" href="">Today's Lesson</a></li>
+            <li><a href="view_schedule.html">View Schedule</a></li>
+            <li><a href="view_report.html">View Reports</a></li>
+        </ul>
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
     
 </div>
+
+<div data-role="page" id="todays_lesson" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1>Today's lesson</h1>
+  	</div>
+  	
+    <div data-role="content" data-theme="e">    
+        <ul id="activities" data-role="listview" data-theme="e">
+            
+        </ul>
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+    
+</div>
+
+<div data-role="page" id="activity_review" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1>Activity Review</h1>
+  	</div>
+  	
+    <div id="activity_review_list" data-role="content" data-theme="e">    
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+    
+</div>
+
+<div data-role="page" id="activity_questions" data-theme="e">
+	
+    <div data-role="header"  data-theme="e">
+    	<h1 id="activity_questions_header" ></h1>
+  	</div>
+  	
+    <div id="activity_questions_answer" data-role="content" data-theme="e">    
+   	</div>
+    
+  	<div data-role="footer" data-theme="e">
+    	<h4>App Name &copy; 2013</h4>
+  	</div>
+    
+</div>
+
+
 
 </body>
 </html>
