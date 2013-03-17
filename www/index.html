@@ -35,8 +35,6 @@
 			$("#error").html('<img src="images/loading.gif"/>');
 			$.post(url,{username:u, password:p, method:'login'},
 				function(data){
-					alert(data.error);
-					alert(data.message);
 					if ( data.error) {
 						$("#error").html(data.error);
 					} else {
@@ -48,7 +46,6 @@
 		});
 		
 		$("#a_activity_review").click(function(e){
-			e.preventDefault();
 			
 			var schedule_activity = $(this).attr("schedule_activities_id");
 			
@@ -186,10 +183,7 @@
     	<h1>Today's lesson</h1>
   	</div>
   	
-    <div data-role="content" data-theme="e">    
-        <ul id="activities" data-role="listview" data-theme="e">
-            
-        </ul>
+    <div id="activities" data-role="content" data-theme="e">    
    	</div>
     
   	<div data-role="footer" data-theme="e">
