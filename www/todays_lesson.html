@@ -13,6 +13,201 @@
     <script src="jquery-mobile/jquery.mobile-1.3.0.min.js"></script>
     
     <script type="text/javascript">
+	
+	$(document).bind("mobileinit", function () {
+        $.mobile.allowCrossDomainPages = true;
+        $.support.cors = true;
+    });
+	
+	$(document).ready(function() {
+			alert(1);
+			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
+			var d = new Date(); 
+			
+			//for testing
+			var todays_date = "2013-02-04";
+			//var todays_date =  d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
+			alert(1);
+			$.post(url, {
+				method: 'get_lesson_activities',
+				date:  todays_date
+				},
+				function(data){
+					alert(2);
+					alert(data);
+					if (data.error) {
+						//alert(data.error);
+						alert(3);
+						$("#todays_lesson_content").html(data.error);
+					} else {
+						alert(4);
+						var content = '';
+						
+						//loop through the data
+						$.each(data, function(id, object) {
+							alert(5);
+                           // $.each(object, function(name, value) {
+							   //alert(object.status);
+								var activity_id 			= object.activity_id;
+								var activity_status 		= object.status;
+								var activity_type 			= object.type;
+								var schedule_activities_id 	= object.schedule_activities_id;
+                            	
+							//});
+							var status = "";
+							
+							if ( activity_status == "closed" ) {
+								status += "Can't view";
+							} else if ( activity_status == "open" ) { 
+								status = '<a id="a_activity_review" schedule_activities_id="'+schedule_activities_id+'" href="">';
+								status += "start";
+								status += '</a>';
+							} else { 
+								status = "Score";
+							}
+							
+							content += '<li>'+activity_type;
+							content += '<span class="ui-li-count">'+ status +'</span>';
+							content += '</li>';
+							
+							
+                        });
+						
+						content += '</ul>';
+						$("#todays_lesson_content").html(content);
+					}
+				},
+			    "json"
+			);
+		});
+	
+	
+	$( '#todays_lesson' ).on( 'pageinit',function(){
+			alert(1);
+			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
+			var d = new Date(); 
+			
+			//for testing
+			var todays_date = "2013-02-04";
+			//var todays_date =  d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
+			alert(1);
+			$.post(url, {
+				method: 'get_lesson_activities',
+				date:  todays_date
+				},
+				function(data){
+					alert(2);
+					alert(data);
+					if (data.error) {
+						//alert(data.error);
+						alert(3);
+						$("#todays_lesson_content").html(data.error);
+					} else {
+						alert(4);
+						var content = '';
+						
+						//loop through the data
+						$.each(data, function(id, object) {
+							alert(5);
+                           // $.each(object, function(name, value) {
+							   //alert(object.status);
+								var activity_id 			= object.activity_id;
+								var activity_status 		= object.status;
+								var activity_type 			= object.type;
+								var schedule_activities_id 	= object.schedule_activities_id;
+                            	
+							//});
+							var status = "";
+							
+							if ( activity_status == "closed" ) {
+								status += "Can't view";
+							} else if ( activity_status == "open" ) { 
+								status = '<a id="a_activity_review" schedule_activities_id="'+schedule_activities_id+'" href="">';
+								status += "start";
+								status += '</a>';
+							} else { 
+								status = "Score";
+							}
+							
+							content += '<li>'+activity_type;
+							content += '<span class="ui-li-count">'+ status +'</span>';
+							content += '</li>';
+							
+							
+                        });
+						
+						content += '</ul>';
+						$("#todays_lesson_content").html(content);
+					}
+				},
+			    "json"
+			);
+		});
+	
+	
+	$( '#todays_lesson' ).live( 'pageinit',function(){
+			alert(1);
+			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
+			var d = new Date(); 
+			
+			//for testing
+			var todays_date = "2013-02-04";
+			//var todays_date =  d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
+			alert(1);
+			$.post(url, {
+				method: 'get_lesson_activities',
+				date:  todays_date
+				},
+				function(data){
+					alert(2);
+					alert(data);
+					if (data.error) {
+						//alert(data.error);
+						alert(3);
+						$("#todays_lesson_content").html(data.error);
+					} else {
+						alert(4);
+						var content = '';
+						
+						//loop through the data
+						$.each(data, function(id, object) {
+							alert(5);
+                           // $.each(object, function(name, value) {
+							   //alert(object.status);
+								var activity_id 			= object.activity_id;
+								var activity_status 		= object.status;
+								var activity_type 			= object.type;
+								var schedule_activities_id 	= object.schedule_activities_id;
+                            	
+							//});
+							var status = "";
+							
+							if ( activity_status == "closed" ) {
+								status += "Can't view";
+							} else if ( activity_status == "open" ) { 
+								status = '<a id="a_activity_review" schedule_activities_id="'+schedule_activities_id+'" href="">';
+								status += "start";
+								status += '</a>';
+							} else { 
+								status = "Score";
+							}
+							
+							content += '<li>'+activity_type;
+							content += '<span class="ui-li-count">'+ status +'</span>';
+							content += '</li>';
+							
+							
+                        });
+						
+						content += '</ul>';
+						$("#todays_lesson_content").html(content);
+					}
+				},
+			    "json"
+			);
+		});
+	
+	
 	 	$( document ).delegate("#todays_lesson", "pageinit", function() {
 			alert(1);
 			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
