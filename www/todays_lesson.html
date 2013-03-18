@@ -19,7 +19,7 @@
         $.support.cors = true;
     });
 	
-	$(document).ready(function() {
+	$("#todays_lesson").live("pagecreate", function(){
 			alert(1);
 			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 			var d = new Date(); 
