@@ -13,8 +13,7 @@
     <script src="jquery-mobile/jquery.mobile-1.3.0.min.js"></script>
     
     <script type="text/javascript">
-	 	//$(document).bind('pageinit',function(){
-		$(document).ready(function() {
+	 	$(document).bind('pageinit',function(){
 			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 			var d = new Date(); 
 			
@@ -37,7 +36,7 @@
 						//loop through the data
 						$.each(data, function(id, object) {
                            // $.each(object, function(name, value) {
-							   alert(object.status);
+							   //alert(object.status);
 								var activity_id 			= object.activity_id;
 								var activity_status 		= object.status;
 								var activity_type 			= object.type;
