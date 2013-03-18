@@ -14,27 +14,32 @@
     
     <script type="text/javascript">
 	 	$(document).bind('pageinit',function(){
+			alert(1);
 			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 			var d = new Date(); 
 			
 			//for testing
 			var todays_date = "2013-02-04";
 			//var todays_date =  d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
-			
+			alert(1);
 			$.post(url, {
 				method: 'get_lesson_activities',
 				date:  todays_date
 				},
 				function(data){
-					//alert(data);
+					alert(2);
+					alert(data);
 					if (data.error) {
 						//alert(data.error);
+						alert(3);
 						$("#todays_lesson_content").html(data.error);
 					} else {
+						alert(4);
 						var content = '';
 						
 						//loop through the data
 						$.each(data, function(id, object) {
+							alert(5);
                            // $.each(object, function(name, value) {
 							   //alert(object.status);
 								var activity_id 			= object.activity_id;
