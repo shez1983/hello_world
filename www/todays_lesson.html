@@ -13,7 +13,7 @@
     <script src="jquery-mobile/jquery.mobile-1.3.0.min.js"></script>
     
     <script type="text/javascript">
-	 	$( document ).delegate("#todays_lesson", "pagebeforecreate", function() {
+	 	$( document ).delegate("#todays_lesson", "pageinit", function() {
 			alert(1);
 			var url = "http://education.shehzadazram.co.uk/jquery/phone_app/connect.php"; 
 			var d = new Date(); 
